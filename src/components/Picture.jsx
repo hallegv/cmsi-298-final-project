@@ -1,13 +1,48 @@
-import React from "react";
+import { useState, useEffect } from "react";
 //import image from './images/image.jpg';
 
 export default function Picture() {
-  return (
-    <div>
-      <img
-        src="https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHw%3D&w=1000&q=80"
-        alt="kitten in grass"
-      />
-    </div>
-  );
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [pics, setPics] = useState([]);
+  const url =
+    "https://api.shutterstock.com/v2/images/search?query=animals&image_type=photo";
+  useEffect(() => {
+    fetch(url, {
+      method: "GET",
+      headers: {
+        authorizaion: "Basic",
+        consumerID: "oTSMGqvmZFXmuhG8hO3amAZBegpqgGnK",
+        consumerSecret: "eksPpXzRqCnD9WqT",
+      },
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setPics(result);
+          console.log(pics);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(true);
+        }
+      );
+  }, []);
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <ul>
+        {pics.map((pic) => (
+          <ul key={pic.id} alt="Randomized for game">
+            {pic.id}
+          </ul>
+        ))}
+      </ul>
+    );
+  }
 }
