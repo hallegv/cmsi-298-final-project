@@ -9,11 +9,13 @@ export default function Picture() {
     "https://api.shutterstock.com/v2/images/search?query=animals&image_type=photo";
   useEffect(() => {
     fetch(url, {
+      mode: "no-cors",
       method: "GET",
       headers: {
         authorizaion: "Basic",
         consumerID: "oTSMGqvmZFXmuhG8hO3amAZBegpqgGnK",
         consumerSecret: "eksPpXzRqCnD9WqT",
+        "Content-Type": "application/json",
       },
     })
       .then((res) => res.json())
@@ -28,7 +30,7 @@ export default function Picture() {
           setError(true);
         }
       );
-  }, []);
+  }, [pics]);
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -38,9 +40,9 @@ export default function Picture() {
     return (
       <ul>
         {pics.map((pic) => (
-          <ul key={pic.id} alt="Randomized for game">
-            {pic.id}
-          </ul>
+          <img key={pic.id} alt="Randomized for game">
+            {pic.preview_1000.url}
+          </img>
         ))}
       </ul>
     );
