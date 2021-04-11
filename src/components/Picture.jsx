@@ -12,9 +12,10 @@ export default function Picture() {
       mode: "no-cors",
       method: "GET",
       headers: {
-        authorizaion: "Basic",
-        consumerID: "oTSMGqvmZFXmuhG8hO3amAZBegpqgGnK",
-        consumerSecret: "eksPpXzRqCnD9WqT",
+        // TODO: resolve 401 Invalid access token error
+        authorizaion: "Bearer Token" + pics?.id_token,
+        consumerKey: "cl2VWcsJbkCm52q4fYZEHxqhti7jWfkB",
+        consumerSecret: "RRwkRI85NGUllXzQ",
         "Content-Type": "application/json",
       },
     })
@@ -33,7 +34,7 @@ export default function Picture() {
   }, [pics]);
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error! Cannot display photo{error.message}</div>;
   } else if (!isLoaded) {
     return <div>Loading...</div>;
   } else {
