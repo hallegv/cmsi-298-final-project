@@ -8,28 +8,19 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { Button, ButtonGroup } from "react-bootstrap";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              
-              <li>
-                <Link to="/play">Play</Link>
-              </li>
-
-              <li>
-                <Link to="/picture">Picture</Link>
-              </li>
-              
-            </ul>
-          </nav>
+          <ButtonGroup toggle size = "lg">
+            <Button variant="info"><Link to="/">Home</Link></Button>
+            <Button variant="success"><Link to="/play">Play</Link></Button>
+            <Button variant="light"><Link to="/picture">Picture</Link></Button>
+          </ButtonGroup>
+  
 
           <Switch>
           <Route path="/picture">

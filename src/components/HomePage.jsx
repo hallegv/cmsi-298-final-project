@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
 
 export default function HomePage(props) {
 
@@ -15,12 +16,9 @@ export default function HomePage(props) {
     <p>[GAME NAME HERE] is a game that tests how much you sweat the details!</p>
     <p>Start with a super zoomed-in image and guess what it is!</p>
 
-    <button style = {{
-      width: "40%",
-      height: 100,
-      fontSize: 50,
+    <Button block style = {{
       fontFamily: "Monaco",
-    }}>Play!</button>
+    }}>Play!</Button>
   </div>;
 
 }
