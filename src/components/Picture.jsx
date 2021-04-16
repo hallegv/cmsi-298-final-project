@@ -4,21 +4,8 @@ export default function Picture() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [pics, setPics] = useState([]);
-  // const [animalList, setAnimalList] = useState({
-  // animalTypes: [
-  //   "hippo",
-  //   "dog",
-  //   "cat",
-  //   "dolphin",
-  //   "walrus",
-  //   "lizard",
-  //   "platypus",
-  //   "bird",
-  //   "perrytheplatypus",
-  // ],
-  // });
-  // const USER_ID = "cl2VWcsJbkCm52q4fYZEHxqhti7jWfkB";
-  // const url = "https://api.shutterstock.com/v2/images/search?query=dog";
+  const sstk = require("shutterstock-api");
+  const api = new sstk.ImagesApi();
   const queries = {
     animals: [
       "hippo",
@@ -31,6 +18,16 @@ export default function Picture() {
       "bird",
       "perrytheplatypus",
     ],
+    cars: ["truck", "sedan", "van", "ferrari", "bmw", "ford", "mustang"],
+    clothes: [
+      "shirt",
+      "jeans",
+      "sweatshirt",
+      "jeanjacket",
+      "pufferjacket",
+      "boots",
+      "tophat",
+    ],
     food: [
       "burger",
       "fries",
@@ -40,19 +37,26 @@ export default function Picture() {
       "tomato",
       "tatertots",
     ],
-    clothes: ["shirt", "jeans", "sweatshirt"],
-    cars: ["truck", "sedan", "van"],
+    tvshows: [
+      "phineasandferb",
+      "spongebob",
+      "simpsons",
+      "familyguy",
+      "modernfamily",
+      "arresteddevelopment",
+      "theoffice",
+    ],
   };
   const keys = Object.keys(queries);
-
-  const sstk = require("shutterstock-api");
-  const api = new sstk.ImagesApi();
+  const randomKey = keys[(keys.length * Math.random()) << 0];
+  const randomIndex = Math.floor(Math.random() * 7);
   const queryParams = {
-    query: keys[(keys.length * Math.random()) << 0],
+    query: queries[randomKey][randomIndex],
     sort: "popular",
     orientation: "horizontal",
   };
-  console.log("query" + queryParams.query);
+  console.log("random key " + randomKey);
+  console.log("query " + queryParams.query);
 
   useEffect(() => {
     sstk.setAccessToken(
