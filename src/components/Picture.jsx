@@ -41,19 +41,14 @@ export default function Picture() {
       "tatertots",
     ],
     clothes: ["shirt", "jeans", "sweatshirt"],
+    cars: ["truck", "sedan", "van"],
   };
+  const keys = Object.keys(queries);
 
   const sstk = require("shutterstock-api");
   const api = new sstk.ImagesApi();
   const queryParams = {
-    query:
-      queries[
-        Object.keys(queries)[
-          Object.values(Object.keys(queries))[
-            Math.floor(Math.random() * Object.keys.length)
-          ]
-        ]
-      ],
+    query: keys[(keys.length * Math.random()) << 0],
     sort: "popular",
     orientation: "horizontal",
   };
