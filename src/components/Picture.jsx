@@ -30,7 +30,7 @@ export default function Picture() {
         setIsLoaded(true);
         setError(true);
       });
-  });
+  }, []);
 
   if (error) {
     console.log(error);
@@ -41,9 +41,11 @@ export default function Picture() {
     return (
       <ul>
         {pics.map((pic) => (
-          <img key={pic.id} alt="Randomized for game">
-            {pic.small_thumb}
-          </img>
+          <img
+            key={pic.id}
+            alt="Randomized for game"
+            src={pic.assets.large_thumb.url}
+          />
         ))}
       </ul>
     );
