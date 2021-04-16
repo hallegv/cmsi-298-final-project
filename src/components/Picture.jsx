@@ -6,6 +6,7 @@ export default function Picture() {
   const [pics, setPics] = useState([]);
   const sstk = require("shutterstock-api");
   const api = new sstk.ImagesApi();
+
   const queries = {
     animals: [
       "hippo",
@@ -82,6 +83,8 @@ export default function Picture() {
   } else if (!isLoaded) {
     return <div>Loading...</div>;
   } else {
+    console.log("pics " + pics);
+    console.log("0th index of pics: " + pics[0]);
     return (
       <ul>
         {pics.map((pic) => (
