@@ -84,7 +84,7 @@ export default function Picture() {
     return <div>Loading...</div>;
   } else {
     console.log("pics " + pics);
-
+    // Figure out a way to not have pics[0]
     return (
       pics && (
         <img
