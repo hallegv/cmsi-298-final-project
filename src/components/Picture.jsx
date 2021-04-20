@@ -84,17 +84,15 @@ export default function Picture() {
     return <div>Loading...</div>;
   } else {
     console.log("pics " + pics);
-    console.log("0th index of pics: " + pics[0]);
+
     return (
-      <ul>
-        {pics.map((pic) => (
-          <img
-            key={pic.id}
-            alt="Randomized for game"
-            src={pic.assets.large_thumb.url}
-          />
-        ))}
-      </ul>
+      pics && (
+        <img
+          key={pics[0].id}
+          alt="Randomized for game"
+          src={pics[0].assets.large_thumb.url}
+        />
+      )
     );
   }
 }
