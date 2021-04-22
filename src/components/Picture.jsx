@@ -66,7 +66,7 @@ export default function Picture() {
     api
       .searchImages(queryParams)
       .then(function ({ data }) {
-        console.log(data);
+        console.log("data" + data);
         setIsLoaded(true);
         setPics(data);
       })
@@ -79,7 +79,7 @@ export default function Picture() {
 
   if (error) {
     console.log(error);
-    return <div>Error! Cannot display photo{error.message}</div>;
+    return <div>Error! Cannot display photo</div>;
   } else if (!isLoaded) {
     return <div>Loading...</div>;
   } else {
@@ -88,6 +88,7 @@ export default function Picture() {
     return (
       pics && (
         <img
+          class="pictureForGame"
           key={pics[0].id}
           alt="Randomized for game"
           src={pics[0].assets.large_thumb.url}
