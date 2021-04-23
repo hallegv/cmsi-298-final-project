@@ -86,7 +86,8 @@ export default function Picture() {
     console.log("pics " + pics);
     // Figure out a way to not have pics[0]
     return (
-      pics && (
+      pics &&
+      pics.length > 0 && (
         <img
           class="pictureForGame"
           key={pics[0].id}
