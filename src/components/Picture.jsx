@@ -77,6 +77,13 @@ export default function Picture() {
       });
   }, []);
 
+  const pictureStyle = {
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+    margin: "auto",
+  };
+
   if (error) {
     console.log(error);
     return <div>Error! Cannot display photo</div>;
@@ -92,7 +99,8 @@ export default function Picture() {
           class="pictureForGame"
           key={pics[0].id}
           alt="Randomized for game"
-          src={pics[0].assets.large_thumb.url}
+          style={pictureStyle}
+          src={pics[0].assets.preview_1000.url}
         />
       )
     );
