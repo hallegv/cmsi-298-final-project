@@ -6,7 +6,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  NavLink
 } from "react-router-dom";
 import { Button, ButtonGroup } from "react-bootstrap";
 
@@ -15,22 +15,29 @@ function App() {
     <div className="App">
       <Router>
         <div>
-          <ButtonGroup toggle size = "lg">
-            <Button variant="info"><Link to="/">Home</Link></Button>
-            <Button variant="success"><Link to="/play">Play</Link></Button>
-            <Button variant="light"><Link to="/picture">Picture</Link></Button>
+        <ButtonGroup toggle size="lg">
+            <NavLink to={'/'}>
+              <Button variant="info">Home</Button>
+            </NavLink>
+
+            <NavLink to={'/play'}>
+              <Button variant="success">Play</Button>
+            </NavLink>
+
+            <NavLink to="/picture">
+              <Button variant="light">Picture</Button>
+            </NavLink>
           </ButtonGroup>
-  
 
           <Switch>
-          <Route path="/picture">
-              <Image />
+            <Route path="/picture">
+              <Picture />
             </Route>
             <Route path="/play">
-              <Play />
+              <Game />
             </Route>
             <Route path="/">
-              <Home />
+              <HomePage />
             </Route>
           </Switch>
           </div>
@@ -38,18 +45,6 @@ function App() {
 </div>
   );
   
-}
-
-function Home() {
-  return <HomePage />;
-}
-
-function Play() {
-  return <Game />;
-}
-
-function Image() {
-  return <Picture />;
 }
 
 export default App;
