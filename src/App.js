@@ -1,6 +1,5 @@
 import "./App.css";
 import Picture from "./components/Picture";
-import SearchBar from './components/SearchBar.js';
 
 import {
   BrowserRouter as Router,

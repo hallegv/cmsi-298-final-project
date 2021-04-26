@@ -62,6 +62,10 @@ export default function Picture() {
   console.log("random key " + randomKey);
   console.log("query " + queryParams.query);
 
+  function updateGuess(newGuess) {
+    setInput(newGuess);
+  }
+
   useEffect(() => {
     sstk.setAccessToken(
       "v2/Y2wyVldjc0pia0NtNTJxNGZZWkVIeHFodGk3aldma0IvMjk4NTQxMjc0L2N1c3RvbWVyLzQvUXd6aDVoUGg0MVlLQTdmeWpCYVJaUzVzYlAtRUNTQ045ZlhZR1JMT1lhMDFCSlhYT3hDX1ZSVTB3dnpUUUQyTTZoTUUwTHdLMDN3WllDTV9HTENBNGFDXzk0Z2V2amVHbWJhTm5GTFMwX1lWSkxsdE1aaUJIXzhSOHFDckZpd1ZGQWRiMXZ0XzBjMko4LVluUV90OVVGZmk3SHRsVGxDN1JVUEFuY3E5ZVJlT1lnNHFHV0Q5STZxTFpBcXBNM283WlhWOXpDakx3dWdLQnJMRjJZc3pTdy9tSG4wZWRMTFBPeHVfN1gwVmtXdWNB"
@@ -117,7 +121,7 @@ export default function Picture() {
             src={pics[0].assets.preview_1000.url}
           />
           <h1>{pics[0].description}</h1>
-          <SearchBar />
+          <SearchBar updateGuess={updateGuess}/>
         </div>
       )
     );

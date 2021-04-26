@@ -1,18 +1,19 @@
-import React from 'react';
-import {useState, useEffect} from "react";
+import { InputGroup, FormControl } from 'react-bootstrap';
 
-const SearchBar = ({keyword,setKeyword}) => {
-    const BarStyling = {width:"20rem",background:"#F2F1F9", border:"none", padding:"0.5rem"};
+export default function SearchBar(props) {
+  const { updateGuess } = props;
 
-    return (
-      <input 
-       style={BarStyling}
-       key="random1"
-       value={keyword}
-       placeholder={"Enter picture guess"}
-       onChange={(e) => setKeyword(e.target.value)}
-      />
-    );
-  }
-
-export default SearchBar;
+  return (
+    <div>
+      <InputGroup className='mb-3'>
+        <FormControl
+          placeholder='Enter Picture guess'
+          aria-label='Guess'
+          aria-describedby='basic-addon2'
+          type='text'
+          onChange={(e) => updateGuess(e.target.value)}
+        />
+      </InputGroup>
+    </div>
+  );
+}
