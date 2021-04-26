@@ -89,7 +89,7 @@ export default function Picture() {
   const wrapperStyle = {
     display: "inline-block",
     overflow: "hidden",
-  }
+  };
 
   if (error) {
     console.log(error);
@@ -97,7 +97,6 @@ export default function Picture() {
   } else if (!isLoaded) {
     return <div>Loading...</div>;
   } else {
-    console.log("pics " + pics);
     // Figure out a way to not have pics[0]
     return (
       pics &&
@@ -110,7 +109,7 @@ export default function Picture() {
             style={pictureStyle}
             src={pics[0].assets.preview_1000.url}
           />
-          <h1>{queryParams.query}</h1>
+          <h1>{pics[0].description}</h1>
         </div>
       )
     );
