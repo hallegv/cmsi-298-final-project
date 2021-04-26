@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-//import SearchBar from './components/SearchBar';
+import SearchBar from "./SearchBar";
 
 export default function Picture() {
   const [error, setError] = useState(null);
@@ -8,6 +8,7 @@ export default function Picture() {
   const [zoom, setZoom] = useState(1);
   const sstk = require("shutterstock-api");
   const api = new sstk.ImagesApi();
+  const [input, setInput] = useState(''); // for search bar
 
   const queries = {
     animals: [
@@ -92,6 +93,12 @@ export default function Picture() {
     overflow: "hidden",
   };
 
+  const updateInput = async (input) => { // for the search bar 
+    return pics[0].description.toLowerCase().includes(input.toLowerCase())
+    setInput(input);
+    //setPicsList(filtered);
+  }
+
   if (error) {
     console.log(error);
     return <div>Error! Cannot display photo</div>;
@@ -110,6 +117,7 @@ export default function Picture() {
             src={pics[0].assets.preview_1000.url}
           />
           <h1>{pics[0].description}</h1>
+          <SearchBar />
         </div>
       )
     );

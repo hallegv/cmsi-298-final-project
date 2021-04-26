@@ -14,13 +14,6 @@ import { Button, Spinner } from "react-bootstrap";
 function App() {
   const [playing, setPlaying] = useState(false);
   const[loading, setLoading] = useState(false);
-  const [input, setInput] = useState('');
-
-  const updateInput = async (input) => { // for the search bar 
-    return pics[0].description.toLowerCase().includes(input.toLowerCase())
-    setInput(input);
-    //setPicsList(filtered);
-  }
   
   useEffect(() => {
     setLoading(true);
