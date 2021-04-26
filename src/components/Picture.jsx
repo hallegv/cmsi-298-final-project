@@ -97,7 +97,6 @@ export default function Picture() {
   } else if (!isLoaded) {
     return <div>Loading...</div>;
   } else {
-    // Figure out a way to not have pics[0]
     return (
       pics &&
       pics.length > 0 && (
