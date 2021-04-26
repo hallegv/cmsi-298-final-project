@@ -4,6 +4,7 @@ export default function Picture() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [pics, setPics] = useState([]);
+  const [zoom, setZoom] = useState(1);
   const sstk = require("shutterstock-api");
   const api = new sstk.ImagesApi();
 
@@ -31,7 +32,7 @@ export default function Picture() {
     ],
     food: [
       "burger",
-      "fries",
+      "frenchfries",
       "shake",
       "pizza",
       "icecream",
@@ -82,7 +83,13 @@ export default function Picture() {
     display: "flex",
     justifyContent: "center",
     margin: "auto",
+    transform: "scale(" + zoom + ")",
   };
+
+  const wrapperStyle = {
+    display: "inline-block",
+    overflow: "hidden",
+  }
 
   if (error) {
     console.log(error);
@@ -95,13 +102,16 @@ export default function Picture() {
     return (
       pics &&
       pics.length > 0 && (
-        <img
-          class="pictureForGame"
-          key={pics[0].id}
-          alt="Randomized for game"
-          style={pictureStyle}
-          src={pics[0].assets.preview_1000.url}
-        />
+        <div class="img-wrapper" style={wrapperStyle}>
+          <img
+            class="pictureForGame"
+            key={pics[0].id}
+            alt="Randomized for game"
+            style={pictureStyle}
+            src={pics[0].assets.preview_1000.url}
+          />
+          <h1>{queryParams.query}</h1>
+        </div>
       )
     );
   }
