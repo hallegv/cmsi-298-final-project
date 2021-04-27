@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import SearchBar from "./SearchBar";
 
 export default function Picture() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [pics, setPics] = useState([]);
   const [zoom, setZoom] = useState(1);
+  const [state, setState] = useState([]);
   const sstk = require("shutterstock-api");
   const api = new sstk.ImagesApi();
-  const [input, setInput] = useState(''); // for search bar
 
   const queries = {
     animals: [
@@ -41,15 +40,7 @@ export default function Picture() {
       "tomato",
       "tatertots",
     ],
-    tvshows: [
-      "phineasandferb",
-      "spongebob",
-      "simpsons",
-      "familyguy",
-      "modernfamily",
-      "arresteddevelopment",
-      "theoffice",
-    ],
+    searchTerm: "",
   };
   const keys = Object.keys(queries);
   const randomKey = keys[(keys.length * Math.random()) << 0];
@@ -61,10 +52,6 @@ export default function Picture() {
   };
   console.log("random key " + randomKey);
   console.log("query " + queryParams.query);
-
-  function updateGuess(newGuess) {
-    setInput(newGuess);
-  }
 
   useEffect(() => {
     sstk.setAccessToken(
@@ -97,10 +84,14 @@ export default function Picture() {
     overflow: "hidden",
   };
 
-  const updateInput = async (input) => { // for the search bar 
-    return pics[0].description.toLowerCase().includes(input.toLowerCase())
-    setInput(input);
-    //setPicsList(filtered);
+  function editSearchTerm(e) {
+    setState({ searchTerm: e.target.value });
+  }
+
+  function dynamicSearch() {
+    return queries[randomKey].filter((query) =>
+      query.toLowerCase().includes(queries.searchTerm.toLowerCase())
+    );
   }
 
   if (error) {
@@ -121,7 +112,14 @@ export default function Picture() {
             src={pics[0].assets.preview_1000.url}
           />
           <h1>{pics[0].description}</h1>
-          <SearchBar updateGuess={updateGuess}/>
+          <input
+            id="input"
+            type="text"
+            onChange={editSearchTerm}
+            placeholder="Guess the image!"
+          />
+          <button onClick={console.log("hi")} placeholder="submit" />
+          {/* <h1>{pics[0].description.includes(queries.searchTerm)}</h1> */}
         </div>
       )
     );
