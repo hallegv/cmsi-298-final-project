@@ -19,6 +19,10 @@ function App() {
     setLoading(false);
   }, [setLoading]);
 
+  const imgStyle = {
+    width: "20%",
+  }
+
   if (loading) {
     return <Spinner animation="border" style={{ margin: "50%" }} />;
   } else if (playing) {
@@ -26,18 +30,8 @@ function App() {
   } else {
     return (
       <div className="App">
-        <h1
-          style={{
-            textAlign: "center",
-            fontFamily: "Papyrus",
-            fontSize: 75,
-            borderBottom: 0,
-            paddingBottom: 0,
-            marginBottom: 0,
-          }}
-        >
-          Welcome to PicPredict!!
-        </h1>
+
+      <img src="https://i.imgur.com/kmlzo6m.png" alt = "b0rken" align="middle" style={imgStyle}></img>
 
         <p>PicPredict is a game that tests how much you sweat the details!</p>
         <p>Start with a super zoomed-in image and guess what it is!</p>
