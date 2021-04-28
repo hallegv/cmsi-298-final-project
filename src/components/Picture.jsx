@@ -19,7 +19,7 @@ export default function Picture() {
       "lizard",
       "platypus",
       "bird",
-      "perrytheplatypus",
+      "platypus",
     ],
     cars: [
       "truck", 
@@ -29,6 +29,8 @@ export default function Picture() {
       "bmw", 
       "ford", 
       "mustang",
+      "boat",
+      "ram",
     ],
     clothes: [
       "shirt",
@@ -38,6 +40,8 @@ export default function Picture() {
       "pufferjacket",
       "boots",
       "hat",
+      "scarf",
+      "shorts"
     ],
     food: [
       "burger",
@@ -47,8 +51,10 @@ export default function Picture() {
       "icecream",
       "tomato",
       "tatertots",
+      "pasta",
+      "smoothie"
     ],
-    searchTerm: "",
+    // searchTerm: "",
   };
   const keys = Object.keys(queries);
   const randomKey = keys[(keys.length * Math.random()) << 0];
@@ -62,9 +68,16 @@ export default function Picture() {
   console.log("query " + queryParams.query);
 
   const handleSubmit = ()=>{
-if(searchTerm !== ""){
-  alert('that is correct')
-}
+    for(let i = 0; i < 5; i++){
+      for(let j = 0; j < 9; i++){
+        if(searchTerm === queries[i][j]){
+          alert('that is correct')
+        }
+        else{
+          alert('try again')
+        }
+      }
+    }
   }
   useEffect(() => {
     sstk.setAccessToken(
