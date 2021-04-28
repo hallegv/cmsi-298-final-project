@@ -5,7 +5,7 @@ export default function Picture() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [pics, setPics] = useState([]);
   const [zoom, setZoom] = useState(1);
-  const [state, setState] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const sstk = require("shutterstock-api");
   const api = new sstk.ImagesApi();
 
@@ -21,7 +21,15 @@ export default function Picture() {
       "bird",
       "perrytheplatypus",
     ],
-    cars: ["truck", "sedan", "van", "ferrari", "bmw", "ford", "mustang"],
+    cars: [
+      "truck", 
+      "sedan", 
+      "van", 
+      "ferrari", 
+      "bmw", 
+      "ford", 
+      "mustang",
+    ],
     clothes: [
       "shirt",
       "jeans",
@@ -29,7 +37,7 @@ export default function Picture() {
       "jeanjacket",
       "pufferjacket",
       "boots",
-      "tophat",
+      "hat",
     ],
     food: [
       "burger",
@@ -53,6 +61,11 @@ export default function Picture() {
   console.log("random key " + randomKey);
   console.log("query " + queryParams.query);
 
+  const handleSubmit = ()=>{
+if(searchTerm !== ""){
+  alert('that is correct')
+}
+  }
   useEffect(() => {
     sstk.setAccessToken(
       "v2/Y2wyVldjc0pia0NtNTJxNGZZWkVIeHFodGk3aldma0IvMjk4NTQxMjc0L2N1c3RvbWVyLzQvUXd6aDVoUGg0MVlLQTdmeWpCYVJaUzVzYlAtRUNTQ045ZlhZR1JMT1lhMDFCSlhYT3hDX1ZSVTB3dnpUUUQyTTZoTUUwTHdLMDN3WllDTV9HTENBNGFDXzk0Z2V2amVHbWJhTm5GTFMwX1lWSkxsdE1aaUJIXzhSOHFDckZpd1ZGQWRiMXZ0XzBjMko4LVluUV90OVVGZmk3SHRsVGxDN1JVUEFuY3E5ZVJlT1lnNHFHV0Q5STZxTFpBcXBNM283WlhWOXpDakx3dWdLQnJMRjJZc3pTdy9tSG4wZWRMTFBPeHVfN1gwVmtXdWNB"
@@ -82,10 +95,12 @@ export default function Picture() {
   const wrapperStyle = {
     display: "inline-block",
     overflow: "hidden",
+    marginLeft: 100,
+    paddingRight: 100
   };
 
   function editSearchTerm(e) {
-    setState({ searchTerm: e.target.value });
+    setSearchTerm(e.target.value);
   }
 
   function dynamicSearch() {
@@ -115,10 +130,13 @@ export default function Picture() {
           <input
             id="input"
             type="text"
+            value = {searchTerm}
             onChange={editSearchTerm}
             placeholder="Guess the image!"
           />
-          <button onClick={console.log("hi")} placeholder="submit" />
+          <button 
+          onClick={handleSubmit} 
+          placeholder="submit" >Submit</button>
           {/* <h1>{pics[0].description.includes(queries.searchTerm)}</h1> */}
         </div>
       )
