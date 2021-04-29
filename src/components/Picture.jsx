@@ -75,7 +75,20 @@ export default function Picture() {
     if (solution.includes(searchTerm) && searchTerm.length >= 3) {
       setPoints(points + 1);
       setTimer(Date.now() + 10000);
-      setRequestSent(true);
+      api
+        .searchImages(queryParams)
+        .then(function ({ data }) {
+          console.log("data" + data);
+          setIsLoaded(true);
+          setPics(data);
+          setSolution(data[0].description.toLowerCase());
+          setRequestSent(false);
+        })
+        .catch(function (error) {
+          console.error(error);
+          setIsLoaded(true);
+          setError(true);
+        });
       alert("that's correct");
     } else if (searchTerm.length < 2) {
       alert("Guess word too short. Try again!");
