@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import Countdown from "react-countdown";
 export default function Picture() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -8,6 +8,8 @@ export default function Picture() {
   const [searchTerm, setSearchTerm] = useState("");
   const [solution, setSolution] = useState("");
   const [points, setPoints] = useState(0);
+  const [timer, setTimer] = useState(Date.now() + 10000);
+  const [gameOver, setGameOver] = useState(false);
 
   const sstk = require("shutterstock-api");
   const api = new sstk.ImagesApi();
@@ -71,14 +73,23 @@ export default function Picture() {
   const handleSubmit = () => {
     if (solution.includes(searchTerm) && searchTerm.length >= 3) {
       setPoints(points + 1);
+      setTimer(Date.now() + 10000);
       alert("that's correct");
     } else if (searchTerm.length < 2) {
-      alert("Guess word too short. Try again stupid!");
+      alert("Guess word too short. Try again!");
     } else {
       alert("try again");
-      if ({ zoom } > 1) {
-        setZoom(zoom - 0.5);
+      if ({ zoom } > 0) {
+        setZoom(zoom + 0.5);
       }
+    }
+  };
+
+  const handleGameOver = () => {
+    if (setTimer() == 0) {
+      setGameOver(true);
+      alert("game over!");
+      return "Time's up! Game Over!";
     }
   };
 
@@ -101,6 +112,9 @@ export default function Picture() {
       });
   }, []);
 
+  /**
+   * Styling for page
+   */
   const pictureStyle = {
     alignItems: "center",
     display: "flex",
@@ -126,6 +140,15 @@ export default function Picture() {
     paddingTop: "20px",
   };
 
+  const timerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: "20px",
+    paddingTop: "20px",
+    fontSize: "50px",
+  };
+
   function editSearchTerm(e) {
     setSearchTerm(e.target.value);
   }
@@ -141,7 +164,6 @@ export default function Picture() {
       pics.length > 0 && (
         <div class="col">
           <div class="row" style={wrapperStyle}>
-            <h1>HEY!!</h1>
             <img
               class="pictureForGame"
               key={pics[0].id}
@@ -156,6 +178,8 @@ export default function Picture() {
           <div class="row">
             <h1>Points: {points}</h1>
           </div>
+          <Countdown date={timer} style={timerStyle} />
+          <h1>{handleGameOver()}</h1>
           <div class="row" style={inputStyle}>
             <input
               id="input"
