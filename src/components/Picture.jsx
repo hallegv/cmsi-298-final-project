@@ -4,8 +4,11 @@ export default function Picture() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [pics, setPics] = useState([]);
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(3);
   const [searchTerm, setSearchTerm] = useState("");
+  const [solution, setSolution] = useState("");
+  const [category, setCategory] = useState("");
+
   const sstk = require("shutterstock-api");
   const api = new sstk.ImagesApi();
 
@@ -22,12 +25,12 @@ export default function Picture() {
       "platypus",
     ],
     cars: [
-      "truck", 
-      "sedan", 
-      "van", 
-      "ferrari", 
-      "bmw", 
-      "ford", 
+      "truck",
+      "sedan",
+      "van",
+      "ferrari",
+      "bmw",
+      "ford",
       "mustang",
       "boat",
       "ram",
@@ -41,7 +44,7 @@ export default function Picture() {
       "boots",
       "hat",
       "scarf",
-      "shorts"
+      "shorts",
     ],
     food: [
       "burger",
@@ -52,10 +55,11 @@ export default function Picture() {
       "tomato",
       "tatertots",
       "pasta",
-      "smoothie"
+      "smoothie",
     ],
-    // searchTerm: "",
   };
+
+  const categories = ["animals", "cars", "clothes", "food"];
   const keys = Object.keys(queries);
   const randomKey = keys[(keys.length * Math.random()) << 0];
   const randomIndex = Math.floor(Math.random() * 7);
@@ -64,21 +68,20 @@ export default function Picture() {
     sort: "popular",
     orientation: "horizontal",
   };
-  console.log("random key " + randomKey);
-  console.log("query " + queryParams.query);
 
-  const handleSubmit = ()=>{
-    for(let i = 0; i < 5; i++){
-      for(let j = 0; j < 9; i++){
-        if(searchTerm === queries[i][j]){
-          alert('that is correct')
-        }
-        else{
-          alert('try again')
-        }
+  const handleSubmit = () => {
+    if (solution.includes(searchTerm) && searchTerm.length >= 3) {
+      alert("that's correct");
+    } else if (searchTerm.length < 2) {
+      alert("Guess word too short. Try again stupid!");
+    } else {
+      alert("try again");
+      if ({ zoom } > 1) {
+        setZoom(zoom - 0.5);
       }
     }
-  }
+  };
+
   useEffect(() => {
     sstk.setAccessToken(
       "v2/Y2wyVldjc0pia0NtNTJxNGZZWkVIeHFodGk3aldma0IvMjk4NTQxMjc0L2N1c3RvbWVyLzQvUXd6aDVoUGg0MVlLQTdmeWpCYVJaUzVzYlAtRUNTQ045ZlhZR1JMT1lhMDFCSlhYT3hDX1ZSVTB3dnpUUUQyTTZoTUUwTHdLMDN3WllDTV9HTENBNGFDXzk0Z2V2amVHbWJhTm5GTFMwX1lWSkxsdE1aaUJIXzhSOHFDckZpd1ZGQWRiMXZ0XzBjMko4LVluUV90OVVGZmk3SHRsVGxDN1JVUEFuY3E5ZVJlT1lnNHFHV0Q5STZxTFpBcXBNM283WlhWOXpDakx3dWdLQnJMRjJZc3pTdy9tSG4wZWRMTFBPeHVfN1gwVmtXdWNB"
@@ -89,6 +92,8 @@ export default function Picture() {
         console.log("data" + data);
         setIsLoaded(true);
         setPics(data);
+        setSolution(data[0].description.toLowerCase());
+        setCategory(randomKey);
       })
       .catch(function (error) {
         console.error(error);
@@ -103,23 +108,31 @@ export default function Picture() {
     justifyContent: "center",
     margin: "auto",
     transform: "scale(" + zoom + ")",
+    width: "30vw",
+    height: "auto",
   };
 
   const wrapperStyle = {
     display: "inline-block",
     overflow: "hidden",
     marginLeft: 100,
-    paddingRight: 100
+    paddingRight: 100,
+  };
+
+  const inputStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: "100px",
+    paddingTop: "20px",
   };
 
   function editSearchTerm(e) {
     setSearchTerm(e.target.value);
   }
 
-  function dynamicSearch() {
-    return queries[randomKey].filter((query) =>
-      query.toLowerCase().includes(queries.searchTerm.toLowerCase())
-    );
+  function filterCategories() {
+    categories.filter((category) => category.includes(queryParams.query));
   }
 
   if (error) {
@@ -131,26 +144,32 @@ export default function Picture() {
     return (
       pics &&
       pics.length > 0 && (
-        <div class="img-wrapper" style={wrapperStyle}>
-          <img
-            class="pictureForGame"
-            key={pics[0].id}
-            alt="Randomized for game"
-            style={pictureStyle}
-            src={pics[0].assets.preview_1000.url}
-          />
-          <h1>{pics[0].description}</h1>
-          <input
-            id="input"
-            type="text"
-            value = {searchTerm}
-            onChange={editSearchTerm}
-            placeholder="Guess the image!"
-          />
-          <button 
-          onClick={handleSubmit} 
-          placeholder="submit" >Submit</button>
-          {/* <h1>{pics[0].description.includes(queries.searchTerm)}</h1> */}
+        <div class="col">
+          <div class="row" style={wrapperStyle}>
+            <h1>HEY!!</h1>
+            <img
+              class="pictureForGame"
+              key={pics[0].id}
+              alt="Randomized for game"
+              style={pictureStyle}
+              src={pics[0].assets.preview_1000.url}
+            />
+          </div>
+          <div class="row">
+            <h1>{pics[0].description}</h1>
+          </div>
+          <div class="row" style={inputStyle}>
+            <input
+              id="input"
+              type="text"
+              value={searchTerm}
+              onChange={editSearchTerm}
+              placeholder="Guess the image!"
+            />
+            <button onClick={handleSubmit} placeholder="submit">
+              Submit
+            </button>
+          </div>
         </div>
       )
     );

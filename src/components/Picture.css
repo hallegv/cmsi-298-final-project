@@ -1,0 +1,21 @@
+.game {
+  width: 100vw;
+  background-color: #bcb;
+}
+
+.pictureForGame {
+  width: 10px;
+  height: auto;
+}
+
+#button,
+#input {
+  display: flex;
+  flex-direction: column;
+  width: 20vw;
+}
+
+.picDescription {
+  width: 50vw;
+  height: auto;
+}
