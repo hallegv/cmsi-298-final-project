@@ -17,8 +17,6 @@ export default function Picture() {
   const [searchTerm, setSearchTerm] = useState("");
   const [solution, setSolution] = useState("");
   const [points, setPoints] = useState(0);
-  const [timer, setTimer] = useState(Date.now() + 20000);
-  // const [gameOver, setGameOver] = useState(false);
 
   const sstk = require("shutterstock-api");
   const api = new sstk.ImagesApi();
@@ -82,8 +80,19 @@ export default function Picture() {
   const handleSubmit = () => {
     if (solution.includes(searchTerm) && searchTerm.length >= 3) {
       setPoints(points + 1);
-      setTimer(Date.now() + 10000);
-      Countdown.stop();
+      api
+        .searchImages(queryParams)
+        .then(function ({ data }) {
+          console.log("data" + data);
+          setIsLoaded(true);
+          setPics(data);
+          setSolution(data[0].description.toLowerCase());
+        })
+        .catch(function (error) {
+          console.error(error);
+          setIsLoaded(true);
+          setError(true);
+        });
       alert("that's correct");
     } else if (searchTerm.length < 2) {
       alert("Guess word too short. Try again!");
@@ -93,11 +102,6 @@ export default function Picture() {
         setZoom(zoom + 0.5);
       }
     }
-  };
-
-  const handleGameOver = () => {
-    // setGameOver(true);
-    return "Time's up! Game Over!";
   };
 
   useEffect(() => {
@@ -185,12 +189,6 @@ export default function Picture() {
           <div class="row">
             <h1>Points: {points}</h1>
           </div>
-          <Countdown
-            date={timer}
-            style={timerStyle}
-            isCompleted={() => handleGameOver()}
-          />
-          <h1>{handleGameOver()}</h1>
           <div class="row" style={inputStyle}>
             <input
               id="input"
