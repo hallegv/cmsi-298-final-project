@@ -17,7 +17,7 @@ export default function Picture() {
   const [searchTerm, setSearchTerm] = useState("");
   const [solution, setSolution] = useState("");
   const [points, setPoints] = useState(0);
-  const [timer, setTimer] = useState(Date.now());
+  const [timer, setTimer] = useState(Date.now() + 20000);
   // const [gameOver, setGameOver] = useState(false);
 
   const sstk = require("shutterstock-api");
@@ -83,8 +83,8 @@ export default function Picture() {
     if (solution.includes(searchTerm) && searchTerm.length >= 3) {
       setPoints(points + 1);
       setTimer(Date.now() + 10000);
+      Countdown.stop();
       alert("that's correct");
-      
     } else if (searchTerm.length < 2) {
       alert("Guess word too short. Try again!");
     } else {
@@ -97,7 +97,6 @@ export default function Picture() {
 
   const handleGameOver = () => {
     // setGameOver(true);
-    alert("game over!");
     return "Time's up! Game Over!";
   };
 
@@ -186,7 +185,11 @@ export default function Picture() {
           <div class="row">
             <h1>Points: {points}</h1>
           </div>
-          <Countdown date={timer} style={timerStyle} onComplete={() => handleGameOver()}/>
+          <Countdown
+            date={timer}
+            style={timerStyle}
+            isCompleted={() => handleGameOver()}
+          />
           <h1>{handleGameOver()}</h1>
           <div class="row" style={inputStyle}>
             <input
@@ -199,23 +202,6 @@ export default function Picture() {
             <button onClick={handleSubmit} placeholder="submit">
               Submit
             </button>
-          </div>
-          <div class="row">
-            <Router>
-              <Switch>
-                <Route path="/">
-                </Route>
-              </Switch>
-              <Link to="/">
-                  <Button
-                    block
-                    style={{ fontFamily: "Monaco" }}
-                    onClick={() => window.location.reload()}
-                  >
-                    Back
-                  </Button>
-              </Link>
-            </Router>
           </div>
         </div>
       )
