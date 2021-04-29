@@ -8,6 +8,7 @@ export default function Picture() {
   const [searchTerm, setSearchTerm] = useState("");
   const [solution, setSolution] = useState("");
   const [category, setCategory] = useState("");
+  const [points, setPoints] = useState(0);
 
   const sstk = require("shutterstock-api");
   const api = new sstk.ImagesApi();
@@ -71,6 +72,7 @@ export default function Picture() {
 
   const handleSubmit = () => {
     if (solution.includes(searchTerm) && searchTerm.length >= 3) {
+      setPoints(points + 1);
       alert("that's correct");
     } else if (searchTerm.length < 2) {
       alert("Guess word too short. Try again stupid!");
@@ -157,6 +159,9 @@ export default function Picture() {
           </div>
           <div class="row">
             <h1>{pics[0].description}</h1>
+          </div>
+          <div class="row">
+            <h1>Points: {points}</h1>
           </div>
           <div class="row" style={inputStyle}>
             <input
