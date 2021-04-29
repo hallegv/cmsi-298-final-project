@@ -7,7 +7,6 @@ export default function Picture() {
   const [zoom, setZoom] = useState(3);
   const [searchTerm, setSearchTerm] = useState("");
   const [solution, setSolution] = useState("");
-  const [category, setCategory] = useState("");
   const [points, setPoints] = useState(0);
 
   const sstk = require("shutterstock-api");
@@ -60,7 +59,6 @@ export default function Picture() {
     ],
   };
 
-  const categories = ["animals", "cars", "clothes", "food"];
   const keys = Object.keys(queries);
   const randomKey = keys[(keys.length * Math.random()) << 0];
   const randomIndex = Math.floor(Math.random() * 7);
@@ -95,7 +93,6 @@ export default function Picture() {
         setIsLoaded(true);
         setPics(data);
         setSolution(data[0].description.toLowerCase());
-        setCategory(randomKey);
       })
       .catch(function (error) {
         console.error(error);
@@ -131,10 +128,6 @@ export default function Picture() {
 
   function editSearchTerm(e) {
     setSearchTerm(e.target.value);
-  }
-
-  function filterCategories() {
-    categories.filter((category) => category.includes(queryParams.query));
   }
 
   if (error) {
