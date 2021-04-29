@@ -85,13 +85,13 @@ export default function Picture() {
     }
   };
 
-  const handleGameOver = () => {
-    if (setTimer() == 0) {
-      setGameOver(true);
-      alert("game over!");
-      return "Time's up! Game Over!";
-    }
-  };
+  // const handleGameOver = () => {
+  //   if (setTimer() == 0) {
+  //     setGameOver(true);
+  //     alert("game over!");
+  //     return "Time's up! Game Over!";
+  //   }
+  // };
 
   useEffect(() => {
     sstk.setAccessToken(
@@ -179,7 +179,7 @@ export default function Picture() {
             <h1>Points: {points}</h1>
           </div>
           <Countdown date={timer} style={timerStyle} />
-          <h1>{handleGameOver()}</h1>
+          {/* <h1>{handleGameOver()}</h1> */}
           <div class="row" style={inputStyle}>
             <input
               id="input"
