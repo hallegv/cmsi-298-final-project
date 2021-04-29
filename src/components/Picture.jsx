@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
 import Countdown from "react-countdown";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  NavLink,
+  Link,
+} from "react-router-dom";
+
 export default function Picture() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -8,9 +17,8 @@ export default function Picture() {
   const [searchTerm, setSearchTerm] = useState("");
   const [solution, setSolution] = useState("");
   const [points, setPoints] = useState(0);
-  const [timer, setTimer] = useState(Date.now() + 10000);
-  const [gameOver, setGameOver] = useState(false);
-  const [requestSent, setRequestSent] = useState(false);
+  const [timer, setTimer] = useState(Date.now());
+  // const [gameOver, setGameOver] = useState(false);
 
   const sstk = require("shutterstock-api");
   const api = new sstk.ImagesApi();
@@ -75,21 +83,8 @@ export default function Picture() {
     if (solution.includes(searchTerm) && searchTerm.length >= 3) {
       setPoints(points + 1);
       setTimer(Date.now() + 10000);
-      api
-        .searchImages(queryParams)
-        .then(function ({ data }) {
-          console.log("data" + data);
-          setIsLoaded(true);
-          setPics(data);
-          setSolution(data[0].description.toLowerCase());
-          setRequestSent(false);
-        })
-        .catch(function (error) {
-          console.error(error);
-          setIsLoaded(true);
-          setError(true);
-        });
       alert("that's correct");
+      
     } else if (searchTerm.length < 2) {
       alert("Guess word too short. Try again!");
     } else {
@@ -100,16 +95,13 @@ export default function Picture() {
     }
   };
 
-  // const handleGameOver = () => {
-  //   if (setTimer() == 0) {
-  //     setGameOver(true);
-  //     alert("game over!");
-  //     return "Time's up! Game Over!";
-  //   }
-  // };
+  const handleGameOver = () => {
+    // setGameOver(true);
+    alert("game over!");
+    return "Time's up! Game Over!";
+  };
 
   useEffect(() => {
-    setRequestSent(true);
     sstk.setAccessToken(
       "v2/Y2wyVldjc0pia0NtNTJxNGZZWkVIeHFodGk3aldma0IvMjk4NTQxMjc0L2N1c3RvbWVyLzQvUXd6aDVoUGg0MVlLQTdmeWpCYVJaUzVzYlAtRUNTQ045ZlhZR1JMT1lhMDFCSlhYT3hDX1ZSVTB3dnpUUUQyTTZoTUUwTHdLMDN3WllDTV9HTENBNGFDXzk0Z2V2amVHbWJhTm5GTFMwX1lWSkxsdE1aaUJIXzhSOHFDckZpd1ZGQWRiMXZ0XzBjMko4LVluUV90OVVGZmk3SHRsVGxDN1JVUEFuY3E5ZVJlT1lnNHFHV0Q5STZxTFpBcXBNM283WlhWOXpDakx3dWdLQnJMRjJZc3pTdy9tSG4wZWRMTFBPeHVfN1gwVmtXdWNB"
     );
@@ -120,7 +112,6 @@ export default function Picture() {
         setIsLoaded(true);
         setPics(data);
         setSolution(data[0].description.toLowerCase());
-        setRequestSent(false);
       })
       .catch(function (error) {
         console.error(error);
@@ -138,7 +129,7 @@ export default function Picture() {
     justifyContent: "center",
     margin: "auto",
     transform: "scale(" + zoom + ")",
-    width: "50vw",
+    width: "30vw",
     height: "auto",
   };
 
@@ -195,8 +186,8 @@ export default function Picture() {
           <div class="row">
             <h1>Points: {points}</h1>
           </div>
-          <Countdown date={timer} style={timerStyle} />
-          {/* <h1>{handleGameOver()}</h1> */}
+          <Countdown date={timer} style={timerStyle} onComplete={() => handleGameOver()}/>
+          <h1>{handleGameOver()}</h1>
           <div class="row" style={inputStyle}>
             <input
               id="input"
@@ -208,6 +199,23 @@ export default function Picture() {
             <button onClick={handleSubmit} placeholder="submit">
               Submit
             </button>
+          </div>
+          <div class="row">
+            <Router>
+              <Switch>
+                <Route path="/">
+                </Route>
+              </Switch>
+              <Link to="/">
+                  <Button
+                    block
+                    style={{ fontFamily: "Monaco" }}
+                    onClick={() => window.location.reload()}
+                  >
+                    Back
+                  </Button>
+              </Link>
+            </Router>
           </div>
         </div>
       )
