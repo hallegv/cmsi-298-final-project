@@ -10,6 +10,7 @@ export default function Picture() {
   const [points, setPoints] = useState(0);
   const [timer, setTimer] = useState(Date.now() + 10000);
   const [gameOver, setGameOver] = useState(false);
+  const [requestSent, setRequestSent] = useState(false);
 
   const sstk = require("shutterstock-api");
   const api = new sstk.ImagesApi();
@@ -74,6 +75,7 @@ export default function Picture() {
     if (solution.includes(searchTerm) && searchTerm.length >= 3) {
       setPoints(points + 1);
       setTimer(Date.now() + 10000);
+      setRequestSent(true);
       alert("that's correct");
     } else if (searchTerm.length < 2) {
       alert("Guess word too short. Try again!");
@@ -94,6 +96,7 @@ export default function Picture() {
   // };
 
   useEffect(() => {
+    setRequestSent(true);
     sstk.setAccessToken(
       "v2/Y2wyVldjc0pia0NtNTJxNGZZWkVIeHFodGk3aldma0IvMjk4NTQxMjc0L2N1c3RvbWVyLzQvUXd6aDVoUGg0MVlLQTdmeWpCYVJaUzVzYlAtRUNTQ045ZlhZR1JMT1lhMDFCSlhYT3hDX1ZSVTB3dnpUUUQyTTZoTUUwTHdLMDN3WllDTV9HTENBNGFDXzk0Z2V2amVHbWJhTm5GTFMwX1lWSkxsdE1aaUJIXzhSOHFDckZpd1ZGQWRiMXZ0XzBjMko4LVluUV90OVVGZmk3SHRsVGxDN1JVUEFuY3E5ZVJlT1lnNHFHV0Q5STZxTFpBcXBNM283WlhWOXpDakx3dWdLQnJMRjJZc3pTdy9tSG4wZWRMTFBPeHVfN1gwVmtXdWNB"
     );
@@ -104,6 +107,7 @@ export default function Picture() {
         setIsLoaded(true);
         setPics(data);
         setSolution(data[0].description.toLowerCase());
+        setRequestSent(false);
       })
       .catch(function (error) {
         console.error(error);
@@ -121,7 +125,7 @@ export default function Picture() {
     justifyContent: "center",
     margin: "auto",
     transform: "scale(" + zoom + ")",
-    width: "30vw",
+    width: "50vw",
     height: "auto",
   };
 
