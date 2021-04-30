@@ -1,13 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
-import Countdown from "react-countdown";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  NavLink,
-  Link,
-} from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 
 export default function Picture() {
   const [error, setError] = useState(null);
@@ -44,17 +36,6 @@ export default function Picture() {
       "boat",
       "ram",
     ],
-    // clothes: [
-    //   "shirt",
-    //   "jeans",
-    //   "sweatshirt",
-    //   "jeanjacket",
-    //   "pufferjacket",
-    //   "boots",
-    //   "hat",
-    //   "scarf",
-    //   "shorts",
-    // ],
     food: [
       "burger",
       "frenchfries",
@@ -179,6 +160,7 @@ export default function Picture() {
     alignItems: "center",
     paddingBottom: "100px",
     paddingTop: "20px",
+    fontFamily:"Ubuntu"
   };
 
   function editSearchTerm(e) {
@@ -187,14 +169,29 @@ export default function Picture() {
 
   if (error) {
     console.log(error);
-    return <div>Error! Cannot display photo</div>;
+    return (
+      <div>
+        <link rel="preconnect" href="https://fonts.gstatic.com"></link>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet"></link>
+        <div style={{textAlign: "center", fontFamily: "Ubuntu"}}>Error! Cannot display photo. Please reload.</div>
+      </div>
+    
+    );
   } else if (!isLoaded) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Spinner animation="grow" style={{margin: "50%"}} />
+        <p>Loading...</p>
+      </div>
+    );
   } else {
     return (
       pics &&
       pics.length > 0 && (
         <div class="col">
+          <link rel="preconnect" href="https://fonts.gstatic.com"></link>
+          <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet"></link>
+          
           <div class="row" style={wrapperStyle}>
             <img
               class="pictureForGame"
@@ -204,8 +201,8 @@ export default function Picture() {
               src={pics[0].assets.preview_1000.url}
             />
           </div>
-          <div class="row">
-            <h1>Points: {points}</h1>
+          <div class="row" style={{textAlign:"center"}}>
+            <h1 style={{fontFamily:"Ubuntu"}}>Points: {points}</h1>
           </div>
           <div class="row" style={inputStyle}>
             <input
