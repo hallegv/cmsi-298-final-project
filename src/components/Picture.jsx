@@ -1,4 +1,13 @@
 import { useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
+import Countdown from "react-countdown";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  NavLink,
+  Link,
+} from "react-router-dom";
 
 export default function Picture() {
   const [error, setError] = useState(null);
@@ -68,16 +77,13 @@ export default function Picture() {
     orientation: "horizontal",
   };
   const [currentQuery, setCurrentQuery] = useState(queryParams);
-
   const [handleSubmitWrapper, setHandleSubmitWrapper] = useState(null);
 
-  console.log("query nurse??" + queryParams.query);
   const handleSubmit = function () {
     // correct
     console.log("current query??", queryParams);
     if (solution.includes(searchTerm) && searchTerm.length >= 3) {
       setPoints(points + 1);
-
       api
         .searchImages(queryParams)
         .then(function ({ data }) {
@@ -86,7 +92,7 @@ export default function Picture() {
           setZoom(3);
           setPics(data);
           setSolution(data[0].description.toLowerCase());
-          setCurrentQuery(queryParams.query);
+          setCurrentQuery(queryParams);
         })
         .catch(function (error) {
           console.error(error);
@@ -107,7 +113,6 @@ export default function Picture() {
             setIsLoaded(true);
             setZoom(zoom - 0.5);
             setPics(data);
-            setSolution(data[0].description.toLowerCase());
           })
           .catch(function (error) {
             console.error(error);
@@ -119,6 +124,7 @@ export default function Picture() {
   };
 
   useEffect(() => {
+    console.log("Use effect :)");
     sstk.setAccessToken(
       "v2/Y2wyVldjc0pia0NtNTJxNGZZWkVIeHFodGk3aldma0IvMjk4NTQxMjc0L2N1c3RvbWVyLzQvUXd6aDVoUGg0MVlLQTdmeWpCYVJaUzVzYlAtRUNTQ045ZlhZR1JMT1lhMDFCSlhYT3hDX1ZSVTB3dnpUUUQyTTZoTUUwTHdLMDN3WllDTV9HTENBNGFDXzk0Z2V2amVHbWJhTm5GTFMwX1lWSkxsdE1aaUJIXzhSOHFDckZpd1ZGQWRiMXZ0XzBjMko4LVluUV90OVVGZmk3SHRsVGxDN1JVUEFuY3E5ZVJlT1lnNHFHV0Q5STZxTFpBcXBNM283WlhWOXpDakx3dWdLQnJMRjJZc3pTdy9tSG4wZWRMTFBPeHVfN1gwVmtXdWNB"
     );
@@ -137,7 +143,7 @@ export default function Picture() {
         setError(true);
       });
     setHandleSubmitWrapper();
-  }, [currentQuery]);
+  }, []);
 
   /**
    * Styling for page
@@ -167,16 +173,10 @@ export default function Picture() {
     alignItems: "center",
     paddingBottom: "100px",
     paddingTop: "20px",
-    fontFamily: "Ubuntu"
   };
 
   function editSearchTerm(e) {
     setSearchTerm(e.target.value);
-  }
-
-  const pointsStyle ={
-    textAlign: "center",
-    fontFamily:"Ubuntu"
   }
 
   if (error) {
@@ -188,34 +188,30 @@ export default function Picture() {
     return (
       pics &&
       pics.length > 0 && (
-        <div>
-          <link rel="preconnect" href="https://fonts.gstatic.com"></link>
-          <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet"></link>
-          <div class="col">
-            <div class="row" style={wrapperStyle}>
-              <img
-                class="pictureForGame"
-                key={pics[0].id}
-                alt="Randomized for game"
-                style={pictureStyle}
-                src={pics[0].assets.preview_1000.url}
-              />
-            </div>
-            <div class="row">
-              <h1 style={pointsStyle}>Points: {points}</h1>
-            </div>
-            <div class="row" style={inputStyle}>
-              <input
-                id="input"
-                type="text"
-                value={searchTerm}
-                onChange={editSearchTerm}
-                placeholder="Guess the image!"
-              />
-              <button onClick={handleSubmit} placeholder="submit">
-                Submit
-              </button>
-            </div>
+        <div class="col">
+          <div class="row" style={wrapperStyle}>
+            <img
+              class="pictureForGame"
+              key={pics[0].id}
+              alt="Randomized for game"
+              style={pictureStyle}
+              src={pics[0].assets.preview_1000.url}
+            />
+          </div>
+          <div class="row">
+            <h1>Points: {points}</h1>
+          </div>
+          <div class="row" style={inputStyle}>
+            <input
+              id="input"
+              type="text"
+              value={searchTerm}
+              onChange={editSearchTerm}
+              placeholder="Guess the image!"
+            />
+            <button onClick={handleSubmit} placeholder="submit">
+              Submit
+            </button>
           </div>
         </div>
       )
