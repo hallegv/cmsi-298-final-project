@@ -19,6 +19,12 @@ function App() {
     setLoading(false);
   }, [setLoading]);
 
+  const buttonStyle = {
+    fontFamily: "Monaco",
+    padding:"1%",
+    fontSize:"150%"
+  }
+
   if (loading) {
     return <Spinner animation="border" style={{ margin: "50%" }} />;
   } else {
@@ -27,15 +33,18 @@ function App() {
         <Switch>
           <Route path="/play">
             <Picture />
-
-            <NavLink to="/play">
-              <Button
-                block
-                style={{ fontFamily: "Monaco" }}
-                >
-                Back to home
-              </Button>
-            </NavLink>
+            
+            <div style={{margin:"5%"}}>
+              <NavLink to="/">
+                <Button
+                  block
+                  variant="secondary"
+                  style={buttonStyle}
+                  >
+                  Back to home
+                </Button>
+              </NavLink>
+            </div>
           </Route>
           <Route path="/">
             <HomePage />
