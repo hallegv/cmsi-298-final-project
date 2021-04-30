@@ -59,7 +59,7 @@ export default function HomePage() {
             <p style={pStyle}>PicPredict is a game that tests how much you sweat the details!</p>
             <p style={pStyle}>Start with a super zoomed-in image and guess what it is!</p>
             <p style={pStyle}>Get it right and get a point!</p>
-            <p style={pStyle}>Try to guess as many pictures as you can within the time limit!</p>
+            <p style={pStyle}>Try to guess as many pictures as you can!</p>
             
 
             <div style={{margin:"5%"}}>

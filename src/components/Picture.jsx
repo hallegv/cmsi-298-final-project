@@ -1,13 +1,4 @@
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
-import Countdown from "react-countdown";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  NavLink,
-  Link,
-} from "react-router-dom";
 
 export default function Picture() {
   const [error, setError] = useState(null);
@@ -176,10 +167,16 @@ export default function Picture() {
     alignItems: "center",
     paddingBottom: "100px",
     paddingTop: "20px",
+    fontFamily: "Ubuntu"
   };
 
   function editSearchTerm(e) {
     setSearchTerm(e.target.value);
+  }
+
+  const pointsStyle ={
+    textAlign: "center",
+    fontFamily:"Ubuntu"
   }
 
   if (error) {
@@ -191,30 +188,34 @@ export default function Picture() {
     return (
       pics &&
       pics.length > 0 && (
-        <div class="col">
-          <div class="row" style={wrapperStyle}>
-            <img
-              class="pictureForGame"
-              key={pics[0].id}
-              alt="Randomized for game"
-              style={pictureStyle}
-              src={pics[0].assets.preview_1000.url}
-            />
-          </div>
-          <div class="row">
-            <h1>Points: {points}</h1>
-          </div>
-          <div class="row" style={inputStyle}>
-            <input
-              id="input"
-              type="text"
-              value={searchTerm}
-              onChange={editSearchTerm}
-              placeholder="Guess the image!"
-            />
-            <button onClick={handleSubmit} placeholder="submit">
-              Submit
-            </button>
+        <div>
+          <link rel="preconnect" href="https://fonts.gstatic.com"></link>
+          <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet"></link>
+          <div class="col">
+            <div class="row" style={wrapperStyle}>
+              <img
+                class="pictureForGame"
+                key={pics[0].id}
+                alt="Randomized for game"
+                style={pictureStyle}
+                src={pics[0].assets.preview_1000.url}
+              />
+            </div>
+            <div class="row">
+              <h1 style={pointsStyle}>Points: {points}</h1>
+            </div>
+            <div class="row" style={inputStyle}>
+              <input
+                id="input"
+                type="text"
+                value={searchTerm}
+                onChange={editSearchTerm}
+                placeholder="Guess the image!"
+              />
+              <button onClick={handleSubmit} placeholder="submit">
+                Submit
+              </button>
+            </div>
           </div>
         </div>
       )
