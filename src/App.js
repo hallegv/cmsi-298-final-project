@@ -1,5 +1,6 @@
 import "./App.css";
 import Picture from "./components/Picture";
+import HomePage from "./components/HomePage";
 
 import {
   BrowserRouter as Router,
@@ -9,7 +10,6 @@ import {
 } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button, Spinner } from "react-bootstrap";
-import HomePage from "./components/HomePage";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -32,6 +32,7 @@ function App() {
       <Router>
         <Switch>
           <Route path="/play">
+            <div style={{backgroundColor:"#F2F2F2"}}>
             <Picture />
             
             <div style={{margin:"5%"}}>
@@ -44,6 +45,7 @@ function App() {
                   Back to home
                 </Button>
               </NavLink>
+            </div>
             </div>
           </Route>
           <Route path="/">

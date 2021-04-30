@@ -33,7 +33,7 @@ export default function HomePage() {
 }
 
   return (
-    <div>
+    <div style={{backgroundColor:"#F2F2F2"}}>
       <link rel="preconnect" href="https://fonts.gstatic.com"></link>
       <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet"></link>
 
