@@ -44,17 +44,17 @@ export default function Picture() {
       "boat",
       "ram",
     ],
-    clothes: [
-      "shirt",
-      "jeans",
-      "sweatshirt",
-      "jeanjacket",
-      "pufferjacket",
-      "boots",
-      "hat",
-      "scarf",
-      "shorts",
-    ],
+    // clothes: [
+    //   "shirt",
+    //   "jeans",
+    //   "sweatshirt",
+    //   "jeanjacket",
+    //   "pufferjacket",
+    //   "boots",
+    //   "hat",
+    //   "scarf",
+    //   "shorts",
+    // ],
     food: [
       "burger",
       "frenchfries",
@@ -76,17 +76,26 @@ export default function Picture() {
     sort: "popular",
     orientation: "horizontal",
   };
+  const [currentQuery, setCurrentQuery] = useState(queryParams);
 
-  const handleSubmit = () => {
+  const [handleSubmitWrapper, setHandleSubmitWrapper] = useState(null);
+
+  console.log("query nurse??" + queryParams.query);
+  const handleSubmit = function () {
+    // correct
+    console.log("current query??", queryParams);
     if (solution.includes(searchTerm) && searchTerm.length >= 3) {
       setPoints(points + 1);
+
       api
         .searchImages(queryParams)
         .then(function ({ data }) {
           console.log("data" + data);
           setIsLoaded(true);
+          setZoom(3);
           setPics(data);
           setSolution(data[0].description.toLowerCase());
+          setCurrentQuery(queryParams.query);
         })
         .catch(function (error) {
           console.error(error);
@@ -97,9 +106,23 @@ export default function Picture() {
     } else if (searchTerm.length < 2) {
       alert("Guess word too short. Try again!");
     } else {
+      // incorrect
       alert("try again");
-      if ({ zoom } > 0) {
-        setZoom(zoom + 0.5);
+      if (zoom > 1) {
+        api
+          .searchImages(currentQuery)
+          .then(function ({ data }) {
+            console.log("data" + data);
+            setIsLoaded(true);
+            setZoom(zoom - 0.5);
+            setPics(data);
+            setSolution(data[0].description.toLowerCase());
+          })
+          .catch(function (error) {
+            console.error(error);
+            setIsLoaded(true);
+            setError(true);
+          });
       }
     }
   };
@@ -112,6 +135,7 @@ export default function Picture() {
       .searchImages(queryParams)
       .then(function ({ data }) {
         console.log("data" + data);
+        console.log("query params", queryParams);
         setIsLoaded(true);
         setPics(data);
         setSolution(data[0].description.toLowerCase());
@@ -121,7 +145,8 @@ export default function Picture() {
         setIsLoaded(true);
         setError(true);
       });
-  }, []);
+    setHandleSubmitWrapper();
+  }, [currentQuery]);
 
   /**
    * Styling for page
@@ -137,8 +162,10 @@ export default function Picture() {
   };
 
   const wrapperStyle = {
-    display: "inline-block",
     overflow: "hidden",
+    display: "flex",
+    justifyContent: "center",
+    margin: "auto",
     marginLeft: 100,
     paddingRight: 100,
   };
@@ -149,15 +176,6 @@ export default function Picture() {
     alignItems: "center",
     paddingBottom: "100px",
     paddingTop: "20px",
-  };
-
-  const timerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingBottom: "20px",
-    paddingTop: "20px",
-    fontSize: "50px",
   };
 
   function editSearchTerm(e) {
@@ -182,9 +200,6 @@ export default function Picture() {
               style={pictureStyle}
               src={pics[0].assets.preview_1000.url}
             />
-          </div>
-          <div class="row">
-            <h1>{pics[0].description}</h1>
           </div>
           <div class="row">
             <h1>Points: {points}</h1>
