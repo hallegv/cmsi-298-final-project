@@ -78,6 +78,7 @@ export default function Picture() {
   };
   const [currentQuery, setCurrentQuery] = useState(queryParams);
   const [handleSubmitWrapper, setHandleSubmitWrapper] = useState(null);
+  const [incorrectGuesses, setIncorrectGuesses] = useState(0);
 
   const handleSubmit = function () {
     // correct
@@ -102,9 +103,14 @@ export default function Picture() {
       alert("that's correct");
     } else if (searchTerm.length < 2) {
       alert("Guess word too short. Try again!");
+    } else if (incorrectGuesses === 5) {
+      alert("Game Over!");
     } else {
       // incorrect
       alert("try again");
+      setIncorrectGuesses(incorrectGuesses + 1);
+      console.log("incorrect", incorrectGuesses);
+      setPoints(points - 1);
       if (zoom > 1) {
         api
           .searchImages(currentQuery)
